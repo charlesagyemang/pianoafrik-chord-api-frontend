@@ -1,0 +1,99 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Harmonization</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="../css/brand.css" rel="stylesheet">
+  <link href="../css/avatar.css" rel="stylesheet">
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+
+</head>
+
+
+<body>
+    <br>
+
+    <center><h1>Piano Afrik Harmonizatrion Portal</h1><center>
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+
+        </div>
+        <div class="col">
+          <h3 class="mx-auto" style="width: 500px;">Enter Key And Press Get Chords</h3><br>
+          <input id="key-value" type="text" name="" value="" placeholder="Enter Key Eg c">
+          <button id="get-chords" class="btn btn-success" type="button" name="button">Get Chords</button><br>
+
+          <div id="shower">
+
+          </div>
+        </div>
+        <div class="col">
+
+        </div>
+      </div>
+    </div>
+
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+
+  $("#get-chords").unbind('click').click(function(){
+    $this =  $(this);
+    const key = $("#key-value").val();
+    const valid = ["c", "c#", "d" , "eb", "e", "f", "f#", "g", "g#", "a", "bb", "b"].includes(key.split(" ")[0].toLowerCase());
+
+    if (key.length > 0 && valid) {
+      // console.log(key);
+
+      $this.text("Fetching... Please Wiat..");
+      axios.get(`https://piano-chords-ghana.herokuapp.com/home/harmonized_chords?key=${key}`)
+      .then((response) => {
+        $this.text("Success..");
+
+        setTimeout(()=>{$this.text("Get Chords");}, 3000)
+
+
+        response = Object.values(response.data.message);
+
+        resArray = []
+
+        response.forEach((resp) => {
+          const formBody = `
+                              <br />${resp.degree}: <br />
+                              Harmonization Options: <br /> ${resp.options.join("<br />")}
+                            `
+          // console.log(resp);
+          resArray.push(formBody)
+        })
+
+        $("#shower").html(resArray.join("<br /><br />"));
+
+
+
+      }).catch((error) => {
+        console.log(error);
+      })
+      return
+    }
+    alert("Error: Please Enter A Correct Key: Eg C, D Eb");
+  })
+
+</script>
+</body>
+</html>
