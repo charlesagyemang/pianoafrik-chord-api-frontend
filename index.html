@@ -38,9 +38,11 @@
 
         </div>
         <div class="col">
-          <h3 class="mx-auto" style="width: 500px;">Enter Key And Press Get Chords</h3><br>
-          <input maxlength="2" id="key-value" type="text" name="" value="" placeholder="Enter Key Eg c">
-          <button id="get-chords" class="btn btn-success" type="button" name="button">Get Chords</button><br>
+          <center>
+            <h3 class="mx-auto" style="width: 500px;">Enter Key And Press Get Chords</h3><br>
+            <input maxlength="2" id="key-value" type="text" name="" value="" placeholder="Enter Key Eg c">
+            <button id="get-chords" class="btn btn-success" type="button" name="button">Get Chords</button><br>
+          </center>
         </div>
         <div class="col">
         </div>
@@ -96,7 +98,7 @@
             $this.text("Success..");
 
 
-            setTimeout(()=>{$this.text("Get Chords");}, 2000)
+            setTimeout(()=>{$this.text("Get Chords");}, 1000)
 
             const sofas = response.data.sofas;
             const chordsAndSofas = Object.values(response.data.chords_and_sofas);
@@ -158,7 +160,7 @@
     .then((response) => {
       // console.log(response.data);
       $(".show").removeAttr('hidden')
-      $("#loading").html("Piano Afrik Harmonizatrion Portal")
+      $("#loading").html("Piano Afrik Chord Portal")
     }).catch((error) => {
       console.log(error);
     })
